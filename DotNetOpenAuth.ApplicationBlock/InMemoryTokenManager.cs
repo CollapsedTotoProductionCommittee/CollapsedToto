@@ -111,6 +111,11 @@ namespace DotNetOpenAuth.ApplicationBlock {
 			this.tokensAndSecrets[accessToken] = accessTokenSecret;
 		}
 
+        public void StoreAccessToken(string accessToken, string accessTokenSecret)
+        {
+            this.tokensAndSecrets[accessToken] = accessTokenSecret;
+        }
+
 		/// <summary>
 		/// Classifies a token as a request token or an access token.
 		/// </summary>

@@ -26,11 +26,15 @@ namespace CollapsedToto
         private NancyHost host = null;
         private ILog logger = null;
 
+        private InvestigationModule investigationModule = null;
+
         public Server(params string[] hosts)
         {
             logger = LogManager.GetLogger(typeof(Server));
             host = new NancyHost(new Bootstrapper(), (from host in hosts select new Uri(host)).ToArray());
             logger.InfoFormat("Server hosts :\n{0}", String.Join("\n", hosts));
+
+            investigationModule = new InvestigationModule();
 
             Database.SetInitializer(new DbInitializer<DatabaseContext>());
             new DatabaseContext().Database.Initialize(true);
@@ -40,6 +44,7 @@ namespace CollapsedToto
         {
             logger.Info("Start Server");
             host.Start();
+            investigationModule.Start();
         }
 
         protected override void OnStart(string[] args)
@@ -51,6 +56,7 @@ namespace CollapsedToto
         {
             logger.Info("Stop Server");
             host.Stop();
+            investigationModule.Stop();
         }
 
         protected override void OnStop()
