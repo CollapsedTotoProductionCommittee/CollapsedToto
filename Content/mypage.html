@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html ng-app>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="image/favicon.png" />
+
+    <script src="js/angular.min.js"></script>
+
+    <title>봉괴토토 기록</title>
+
+    <!-- css -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <!-- Should be moved into including sshtml file -->
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapsing" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">@Collapsed_bot TOTO</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapsing">
+                <ul class="nav navbar-nav">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="history.html">History</a></li>
+                    <li><a href="leaderboard.html">Leaderboard</a></li>
+                </ul>
+
+                <!-- To Login -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><img src="image/twitter_logo_blue_16.png"> Login via Twitter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- Logged In -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">로그인 된 이름 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="mypage.html">My Page</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <h1>디버거</h1>
+            <p>
+                보유 포인트: <strong>1,123</strong> pt (개인회생: <strong>0</strong> 회)
+            </p>
+        </div>
+        
+        <div class="row">
+            <hr>
+            <h2>참가 현황</h2>
+            <p>
+                현재 제 <strong>346</strong> 라운드가 진행 중입니다.
+            </p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>단어</th>
+                        <th>현재 배당률</th>
+                        <th>소비 포인트</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row"><a href="word.html?word=%EB%B6%95%EA%B4%B4">붕괴</a></th>
+                        <td>1.72</td>
+                        <td>72 pt</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href="word.html?word=%EC%95%84%EC%9D%B4%EB%8F%8C">아이돌</a></th>
+                        <td>7.65</td>
+                        <td>24 pt</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="pull-right">
+                현재 라운드 총 소비 포인트 : <strong>96</strong> pt
+            </p>
+        </div>
+
+        <div class="row">
+            <hr>
+            <h2>개인회생</h2>
+            <!-- 신청불가 -->
+            <p class="bg-danger">
+                보유 포인트가 <strong>100</strong> pt 이하일때 개인회생 신청이 가능합니다.
+            </p>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-info">개인회생 보험에 투자 (100pt)</button>
+            </div>
+            <div class="col-md-9">
+                <dl>
+                    <dt>상품설명</dt>
+                    <dd>배팅에 실패해 보유 포인트가 부족해졌을때에 대비해 개인회생 보험에 투자하실 수 있습니다.</dd>
+                    <dt>효과</dt>
+                    <dd>투자를 통해 개인회생 처리 시간을 <strong>1시간 15분</strong> 에서 <strong>35분</strong> 으로 줄일 수 있습니다.</dd>
+                </dl>
+            </div>
+            <!-- 신청가능 -->
+            <div id="revive-request">
+                <button type="button" class="btn btn-success">개인회생 신청</button>
+                <p>
+                    개인회생 신청시, <strong>1시간 15분</strong> 후 소지 포인트가 <strong>100pt</strong>로 충전됩니다.
+                </p>
+            </div>
+            <!-- 처리 중 -->
+            <div id="revive-process">
+                <p>
+                    개인회생 처리 중 ... (<strong>12분 23초</strong> 남음)
+                </p>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                        <span class="sr-only">60% Complete</span>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        <div class="row">
+            <hr>
+            <h2>내 참가 기록</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>회차</th>
+                        <th>종료일시</th>
+                        <th>트윗</th>
+                        <th>소비 포인트</th>
+                        <th>획득 포인트</th>
+                        <th>상세보기</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>2015-08-16 00:30:02 (KST)</td>
+                        <td>번식이라는 개념이 존재하지 않는 고결한 ...</td>
+                        <td>346 pt</td>
+                        <td class="text-danger">0 pt</td>
+                        <td>
+                            <a class="btn btn-info" href="result.html?round=2" role="button">상세</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- js -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/test.js"></script>
+</body>
+</html>

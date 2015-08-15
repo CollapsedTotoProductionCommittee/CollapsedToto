@@ -51,16 +51,26 @@
     <Folder Include="image\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="about.html" />
     <Content Include="css\bootstrap-theme.css" />
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\common.css" />
+    <Content Include="curround.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="history.html" />
+    <Content Include="index.html" />
     <Content Include="js\angular.min.js" />
-    <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery-2.1.4.min.js" />
+    <Content Include="leaderboard.html" />
+    <Content Include="mypage.html" />
+    <Content Include="oldround.html" />
+    <Content Include="profile.html" />
+    <Content Include="result.html" />
     <Content Include="test.htm" />
+    <Content Include="word.html" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="js\test.ts" />
