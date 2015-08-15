@@ -43,20 +43,6 @@ namespace CollapsedToto
 
             return response;
         }
-
-        public static HttpRequestBase AsNetRequest(this Request request)
-        {
-            HttpRequest req = new HttpRequest(request.Url.Path, request.Url.ToString(), request.Url.Query);
-
-            req.RequestType = request.Method;
-            var headers = req.Headers;
-            foreach (var key in request.Headers.Keys)
-            {
-                headers.Add(key, request.Headers[key].ToString());
-            }
-
-            return new HttpRequestWrapper(req);
-        }
     }
 }
 
