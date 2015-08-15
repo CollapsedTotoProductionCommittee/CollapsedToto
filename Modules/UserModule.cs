@@ -13,6 +13,7 @@ using DotNetOpenAuth.OAuth.ChannelElements;
 using DotNetOpenAuth.OAuth.Messages;
 using log4net;
 using Nancy;
+using Nancy.Responses;
 
 namespace CollapsedToto
 {
@@ -216,12 +217,16 @@ namespace CollapsedToto
         {
             logger.Debug("Try SignIn");
             var callbackUriString = Request.Url.SiteBase + "/user/callback";
-            if (param.redirect != null)
+            Dictionary<string, string> redirectParam = null;
+            if (Request.Query.redirect != null)
             {
-                callbackUriString += string.Format("?redirect={0}", param.redirect);
+                redirectParam = new Dictionary<string, string>
+                {
+                    { "redirect", Request.Query.redirect }
+                };
             }
             var callbackUri = new Uri(callbackUriString);
-            var request = TwitterSignIn.PrepareRequestUserAuthorization(callbackUri, null, null);
+            var request = TwitterSignIn.PrepareRequestUserAuthorization(callbackUri, null, redirectParam);
 
             return TwitterSignIn.Channel.PrepareResponse(request).AsNancyResponse();
         }
@@ -241,7 +246,14 @@ namespace CollapsedToto
                 }
                 await context.SaveChangesAsync();
             }
-            return TwitterSignIn.Channel.PrepareResponse(response).AsNancyResponse();
+
+            string redirect = "/";
+            if (Request.Query.redirect != null)
+            {
+                redirect = Request.Query.redirect;
+            }
+
+            return new RedirectResponse(redirect);
         }
     }
 }
