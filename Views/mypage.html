@@ -1,0 +1,116 @@
+﻿@Master['layout']
+
+@Section['Title']
+My Page
+@EndSection
+
+@Section['Contents']
+    <div class="container">
+        <div class="row">
+            <h1>디버거</h1>
+            <p>
+                보유 포인트: <strong>1,123</strong> pt (개인회생: <strong>0</strong> 회)
+            </p>
+        </div>
+        
+        <div class="row">
+            <hr>
+            <h2>참가 현황</h2>
+            <p>
+                현재 제 <strong>346</strong> 라운드가 진행 중입니다.
+            </p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>단어</th>
+                        <th>현재 배당률</th>
+                        <th>소비 포인트</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row"><a href="word.html?word=%EB%B6%95%EA%B4%B4">붕괴</a></th>
+                        <td>1.72</td>
+                        <td>72 pt</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href="word.html?word=%EC%95%84%EC%9D%B4%EB%8F%8C">아이돌</a></th>
+                        <td>7.65</td>
+                        <td>24 pt</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="pull-right">
+                현재 라운드 총 소비 포인트 : <strong>96</strong> pt
+            </p>
+        </div>
+
+        <div class="row">
+            <hr>
+            <h2>개인회생</h2>
+            <!-- 신청불가 -->
+            <p class="bg-danger">
+                보유 포인트가 <strong>100</strong> pt 이하일때 개인회생 신청이 가능합니다.
+            </p>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-info">개인회생 보험에 투자 (100pt)</button>
+            </div>
+            <div class="col-md-9">
+                <dl>
+                    <dt>상품설명</dt>
+                    <dd>배팅에 실패해 보유 포인트가 부족해졌을때에 대비해 개인회생 보험에 투자하실 수 있습니다.</dd>
+                    <dt>효과</dt>
+                    <dd>투자를 통해 개인회생 처리 시간을 <strong>1시간 15분</strong> 에서 <strong>35분</strong> 으로 줄일 수 있습니다.</dd>
+                </dl>
+            </div>
+            <!-- 신청가능 -->
+            <div id="revive-request">
+                <button type="button" class="btn btn-success">개인회생 신청</button>
+                <p>
+                    개인회생 신청시, <strong>1시간 15분</strong> 후 소지 포인트가 <strong>100pt</strong>로 충전됩니다.
+                </p>
+            </div>
+            <!-- 처리 중 -->
+            <div id="revive-process">
+                <p>
+                    개인회생 처리 중 ... (<strong>12분 23초</strong> 남음)
+                </p>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                        <span class="sr-only">60% Complete</span>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        <div class="row">
+            <hr>
+            <h2>내 참가 기록</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>회차</th>
+                        <th>종료일시</th>
+                        <th>트윗</th>
+                        <th>소비 포인트</th>
+                        <th>획득 포인트</th>
+                        <th>상세보기</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>2015-08-16 00:30:02 (KST)</td>
+                        <td>번식이라는 개념이 존재하지 않는 고결한 ...</td>
+                        <td>346 pt</td>
+                        <td class="text-danger">0 pt</td>
+                        <td>
+                            <a class="btn btn-info" href="result.html?round=2" role="button">상세</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+@EndSection

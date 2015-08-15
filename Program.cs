@@ -89,7 +89,7 @@ namespace CollapsedToto
         {
             XmlConfigurator.Configure();
 
-            Server server = new Server("http://0.0.0.0:8000", "http://127.0.0.1:8000");
+            Server server = new Server("http://0.0.0.0:8001", "http://127.0.0.1:8001");
 
 #if !DEBUG
             if (args.Count() < 1 || args[0] != "-i")
