@@ -21,11 +21,5 @@ namespace CollapsedToto
         // 개인회생시에 요구되는 시간의 레벨
         public int PaneltyLevel { get; set; }
     }
-
-    [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
-    public class UserContext :  DbContext
-    {
-        public DbSet<User> Users { get; set; }
-    }
 }
 

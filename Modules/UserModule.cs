@@ -233,7 +233,7 @@ namespace CollapsedToto
             var response = TwitterSignIn.ProcessUserAuthorization(Request);
             string userID = response.ExtraData["user_id"];
             Session["UserID"] = userID;
-            using (var context = new UserContext())
+            using (var context = new DatabaseContext())
             {
                 if (!context.Users.Any(user => user.UserID == userID))
                 {
