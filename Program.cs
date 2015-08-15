@@ -8,6 +8,7 @@ using Nancy.Bootstrapper;
 using Nancy.Hosting.Self;
 using Nancy.Session;
 using Nancy.TinyIoc;
+using System.Data.Entity;
 
 namespace CollapsedToto
 {
@@ -30,6 +31,12 @@ namespace CollapsedToto
             logger = LogManager.GetLogger(typeof(Server));
             host = new NancyHost(new Bootstrapper(), (from host in hosts select new Uri(host)).ToArray());
             logger.InfoFormat("Server hosts :\n{0}", String.Join("\n", hosts));
+
+            Database.SetInitializer(new CreateDatabaseIfNotExists<UserContext>());
+            using (var context = new UserContext())
+            {
+                context.Database.Initialize(true);
+            }
         }
 
         public void Start()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using StackExchange.Redis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,17 +41,29 @@ namespace CollapsedToto
         public async Task<dynamic> BettingKeyword(dynamic param, CancellationToken ct)
         {
             bool result = false;
-            dynamic data = Request.Form;
-            if (data.Count == 0)
-            {
-                data = Request.Query;
-            }
-            string keyword = (data["keyword"].ToString()).Trim();
-            int point = int.Parse(data["point"].ToString());
-            await Database.SortedSetIncrementAsync(CurrentRoundKey, keyword, 1.0);
+            var userID = Session["UserID"];
 
-            // TODO: subtract user point
-            result = true;
+            if (userID != null)
+            {
+                dynamic data = Request.Form;
+                if (data.Count == 0)
+                {
+                    data = Request.Query;
+                }
+                string keyword = (data["keyword"].ToString()).Trim();
+                int point = int.Parse(data["point"].ToString());
+                using (var context = new UserContext())
+                {
+                    await Database.SortedSetIncrementAsync(CurrentRoundKey, keyword, 1.0);
+
+                    var userInfo = (from user in context.Users where user.UserID == userID select user).First();
+                    userInfo.Point -= point;
+
+                    await context.SaveChangesAsync();
+
+                    result = true;
+                }
+            }
 
             return JsonConvert.SerializeObject(result);
         }

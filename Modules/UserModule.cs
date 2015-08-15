@@ -227,11 +227,20 @@ namespace CollapsedToto
         }
 
         [Get("/callback")]
-        public dynamic callback(dynamic param)
+        public async Task<dynamic> callback(dynamic param, CancellationToken ct)
         {
             logger.Debug("Callback ");
             var response = TwitterSignIn.ProcessUserAuthorization(Request);
-
+            string userID = response.ExtraData["user_id"];
+            Session["UserID"] = userID;
+            using (var context = new UserContext())
+            {
+                if (!context.Users.Any(user => user.UserID == userID))
+                {
+                    context.Users.Add(new User(userID));
+                }
+                await context.SaveChangesAsync();
+            }
             return TwitterSignIn.Channel.PrepareResponse(response).AsNancyResponse();
         }
     }
