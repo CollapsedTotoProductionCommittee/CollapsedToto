@@ -9,9 +9,25 @@ using Nancy.Hosting.Self;
 using Nancy.Session;
 using Nancy.TinyIoc;
 using System.Data.Entity;
+using Nancy.ErrorHandling;
 
 namespace CollapsedToto
 {
+    class CustomStatusCode : IStatusCodeHandler
+    {
+        #region IStatusCodeHandler implementation
+        public bool HandlesStatusCode(HttpStatusCode statusCode, NancyContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Handle(HttpStatusCode statusCode, NancyContext context)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+    }
+
     class Bootstrapper : DefaultNancyBootstrapper
     {
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
