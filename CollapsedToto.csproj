@@ -60,9 +60,6 @@
     <Reference Include="RestSharp">
       <HintPath>packages\RestSharp.104.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="StackExchange.Redis">
-      <HintPath>packages\StackExchange.Redis.1.0.481\lib\net45\StackExchange.Redis.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http.Primitives">
       <HintPath>packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
@@ -140,6 +137,9 @@
       <HintPath>packages\DotNetOpenAuth.OAuth2.ResourceServer.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth2.ResourceServer.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="StackExchange.Redis">
+      <HintPath>lib\StackExchange.Redis.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -151,6 +151,7 @@
     <Compile Include="Utils.cs" />
     <Compile Include="MemorySession.cs" />
     <Compile Include="DotNetOpenAuth.ApplicationBlock\InMemoryTokenManager.cs" />
+    <Compile Include="Modules\RoundModule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
