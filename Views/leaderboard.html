@@ -1,0 +1,71 @@
+﻿@Master['layout']
+
+@Section['Title']
+붕괴토토 랭킹
+@EndSection
+
+@Section['Contents']
+    <div class="container">
+        <h1>붕괴토토 포인트 랭킹</h1>
+        (서버시각 랜더링) 현재, 포인트 기준 순위입니다.
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-info">내 순위 보기</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <nav>
+                    <ul class="pager">
+                        <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                        <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                    </ul>
+                </nav>
+                
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>User</th>
+                            <th>Point</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><a href="profile.html?id=150511652">디버거</a></td>
+                            <td>123</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td><a href="profile.html?id=77647198">Perlmint</a></td>
+                            <td>111</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <nav class="pull-right" ng-controller="Pagination">
+                    <pagination total-items="totalPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    angular.module('ui.bootstrap.demo').controller('Pagination', function ($scope, $log) {
+  		$scope.totalPage = @Model.TotalPage;
+  		$scope.currentPage = @Model.CurrentPage;
+
+	  $scope.setPage = function (pageNo) {
+	    $scope.currentPage = pageNo;
+	  };
+
+	  $scope.pageChanged = function() {
+	    $log.log('Page changed to: ' + $scope.currentPage);
+	  };
+
+	  $scope.maxSize = 10;
+	});
+    </script>
+@EndSection

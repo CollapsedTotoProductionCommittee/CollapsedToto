@@ -281,6 +281,56 @@ namespace CollapsedToto
             }
         }
 
+        [Post("/revive")]
+        public dynamic ReviveRequest(dynamic param)
+        {
+            bool ret = false;
+            using (var context = new DatabaseContext())
+            {
+                User user = context.Users.Where(u => u.UserID.Equals((string)Session["UserID"])).FirstOrDefault<User>();
+
+                if (user.Point <= Constants.MinimumPoint)
+                {
+                    TimeSpan reviveTerm = new TimeSpan(0, user.PaneltyLevel ^ 2 * 5, 0);
+                    DateTime now = DateTime.UtcNow;
+
+                    if (user.ReviveRequestedTime.Year == 1970 || user.ReviveRequestedTime + reviveTerm < now)
+                    {
+                        user.ReviveRequestedTime = now;
+
+                        context.SaveChanges();
+
+                        ret = true;
+                    }
+                }
+            }
+
+            return JsonConvert.SerializeObject(ret);
+        }
+
+        [Post("/upgrade")]
+        public dynamic Upgrade(dynamic param)
+        {
+            bool ret = false;
+            using (var context = new DatabaseContext())
+            {
+                User user = context.Users.Where(u => u.UserID.Equals((string)Session["UserID"])).FirstOrDefault();
+
+                int requiredPoint = user.UpgradeCount ^ 2 * 200;
+                if (user.Point > requiredPoint)
+                {
+                    user.UpgradeCount += 1;
+                    --user.PaneltyLevel;
+
+                    context.SaveChanges();
+
+                    ret = true;
+                }
+            }
+
+            return JsonConvert.SerializeObject(ret);
+        }
+
         public void OnProfile(IAsyncResult ar)
         {
             Tuple<User, HttpWebRequest> state = ar.AsyncState as Tuple<User, HttpWebRequest>;

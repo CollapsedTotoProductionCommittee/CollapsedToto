@@ -9,9 +9,25 @@ using Nancy.Hosting.Self;
 using Nancy.Session;
 using Nancy.TinyIoc;
 using System.Data.Entity;
+using Nancy.ErrorHandling;
 
 namespace CollapsedToto
 {
+    class CustomStatusCode : IStatusCodeHandler
+    {
+        #region IStatusCodeHandler implementation
+        public bool HandlesStatusCode(HttpStatusCode statusCode, NancyContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Handle(HttpStatusCode statusCode, NancyContext context)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+    }
+
     class Bootstrapper : DefaultNancyBootstrapper
     {
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
@@ -38,6 +54,8 @@ namespace CollapsedToto
 
             Database.SetInitializer(new DbInitializer<DatabaseContext>());
             new DatabaseContext().Database.Initialize(true);
+
+            ServerInit.Init();
         }
 
         public void Start()
@@ -71,7 +89,7 @@ namespace CollapsedToto
         {
             XmlConfigurator.Configure();
 
-            Server server = new Server("http://0.0.0.0:8000", "http://127.0.0.1:8000");
+            Server server = new Server("http://0.0.0.0:8001", "http://127.0.0.1:8001");
 
 #if !DEBUG
             if (args.Count() < 1 || args[0] != "-i")

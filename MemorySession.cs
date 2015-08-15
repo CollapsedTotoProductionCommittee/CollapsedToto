@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using Nancy.Cookies;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace CollapsedToto
 {
     public class MemorySession : IObjectSerializerSelector
     {
         protected string cookieName = "SESSIONID";
+
 
         public MemorySession()
         {
@@ -68,12 +70,14 @@ namespace CollapsedToto
             }
 
             ctx.Request.Session = sessionStore.Load(ctx.Request);
+            ctx.Request.Session["Logic"] = new BaseLogic(ctx.Request.Session);
 
             return null;
         }
 
         static void SaveSession(NancyContext ctx, MemorySession sessionStore)
         {
+            ctx.Request.Session["Logic"] = null;
             sessionStore.Save(ctx.Request.Session, ctx.Response);
         }
 

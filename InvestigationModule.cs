@@ -6,8 +6,10 @@ using DotNetOpenAuth.OAuth;
 using DotNetOpenAuth.OAuth.Messages;
 using System.Collections.Generic;
 using System.Net;
+using System.Linq;
 using System.IO;
 using log4net;
+using Newtonsoft.Json.Linq;
 
 namespace CollapsedToto
 {
@@ -72,6 +74,113 @@ namespace CollapsedToto
                 {
                     string line = reader.ReadLineAsync().Result;
                     logger.Debug(line);
+                    line = line.Trim();
+                    if (line.Length > 0)
+                    {
+                        try
+                        {
+                            ProcessNewTweet(line);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+            }
+
+            public void ProcessNewTweet(string line)
+            {
+                JObject tweet = JObject.Parse(line);
+
+                // 트윗 삭제는 무시
+                if (tweet["delete"] != null)
+                {
+                    return;
+                }
+
+                string text = tweet["text"].ToString();
+                string timeString = tweet["timestamp_ms"].ToString();
+                DateTime now = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                now = now.AddSeconds(UInt64.Parse(timeString) / 1000);
+                using (var context = new DatabaseContext())
+                {
+                    RoundResult lastResult = null;
+                    try
+                    {
+                        lastResult = context.RoundResults.LastOrDefault();
+                    }
+                    catch
+                    {
+                        // Do nothing
+                    }
+                    int newRoundID = 1;
+                    if (lastResult != null)
+                    {
+                        if (now - lastResult.TweetTime < Constants.MinimumDelay)
+                        {
+                            return;
+                        }
+                        newRoundID = lastResult.RoundID + 1;
+                    }
+
+                    MessageReceivingEndpoint endpoint = new MessageReceivingEndpoint(
+                        "https://api.twitter.com/1.1/statuses/oembed.json",
+                        HttpDeliveryMethods.GetRequest | HttpDeliveryMethods.AuthorizationHeaderRequest);
+
+                    var extraData = new Dictionary<string, string>
+                    {
+                        { "id", tweet["id_str"].ToString() }
+                    };
+                    var request = consumer.PrepareAuthorizedRequest(endpoint, Constants.TwitterAccessToken, extraData);
+
+                    RoundResult newResult = new RoundResult();
+                    newResult.RoundID = newRoundID;
+                    newResult.Text = text;
+                    newResult.EmbedTweet = JObject.Parse(new StreamReader(request.GetResponse().GetResponseStream()).ReadToEnd())["html"].ToString();;
+                    newResult.TweetTime = now;
+
+                    var redis = RedisContext.Database;
+                    redis.StringSet(RedisContext.CurrentRoundID, newRoundID);
+                    var keywords = redis.SortedSetRangeByRankWithScores(RedisContext.CurrentRoundKey);
+                    KeyValuePair<string, int>? specialBet = null;
+                    int matchedPoint = 0, unmatchedPoint = 0;
+                    foreach (var keyword in keywords)
+                    {
+                        var pair = new KeyValuePair<string, int>(keyword.Element.ToString(), (int)keyword.Score);
+                        if (pair.Key.Length == 0)
+                        {
+                            specialBet = pair;
+                            continue;   
+                        }
+
+                        if (text.Contains(pair.Key))
+                        {
+                            newResult.MatchedValues.Add(pair);
+                            matchedPoint += pair.Value;
+                        }
+                        else
+                        {
+                            newResult.UnmatchedValues.Add(pair);
+                            unmatchedPoint += pair.Value;
+                        }
+                    }
+
+                    if (specialBet != null)
+                    {
+                        if (newResult.MatchedValues.Count == 0)
+                        {
+                            newResult.MatchedValues.Add(specialBet.Value);
+                            matchedPoint += specialBet.Value.Value;
+                        }
+                        else
+                        {
+                            newResult.UnmatchedValues.Add(specialBet.Value);
+                            unmatchedPoint += specialBet.Value.Value;
+                        }
+                    }
+
+                    context.RoundResults.Add(newResult);
+                    context.SaveChanges();
                 }
             }
         }
