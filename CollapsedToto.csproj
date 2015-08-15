@@ -146,6 +146,7 @@
     <Compile Include="Modules\MainModule.cs" />
     <Compile Include="Modules\BaseModule.cs" />
     <Compile Include="Modules\UserModule.cs" />
+    <Compile Include="MemorySession.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

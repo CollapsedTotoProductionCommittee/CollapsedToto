@@ -15,8 +15,8 @@ namespace CollapsedToto
     {
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            StaticConfiguration.DisableErrorTraces = true;
-            CookieBasedSessions.Enable(pipelines);
+            StaticConfiguration.DisableErrorTraces = false;
+            MemorySession.Enable(pipelines);
         }
     }
 
@@ -28,7 +28,7 @@ namespace CollapsedToto
         public Server(params string[] hosts)
         {
             logger = LogManager.GetLogger(typeof(Server));
-            host = new NancyHost((from host in hosts select new Uri(host)).ToArray());
+            host = new NancyHost(new Bootstrapper(), (from host in hosts select new Uri(host)).ToArray());
             logger.InfoFormat("Server hosts :\n{0}", String.Join("\n", hosts));
         }
 
