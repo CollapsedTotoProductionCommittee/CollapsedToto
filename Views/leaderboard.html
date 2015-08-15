@@ -6,51 +6,61 @@
 
 @Section['Contents']
     <div class="container">
-        <h1>붕괴토토 포인트 랭킹</h1>
-        (서버시각 랜더링) 현재, 포인트 기준 순위입니다.
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-info">내 순위 보기</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <nav>
-                    <ul class="pager">
-                        <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
-                        <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
-                    </ul>
-                </nav>
-                
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>User</th>
-                            <th>Point</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td><a href="profile.html?id=150511652">디버거</a></td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td><a href="profile.html?id=77647198">Perlmint</a></td>
-                            <td>111</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <nav class="pull-right" ng-controller="Pagination">
-                    <pagination total-items="totalPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"></pagination>
-                </nav>
-            </div>
+    <h1>붕괴토토 포인트 랭킹</h1>
+    (서버시각 랜더링) 현재, 포인트 기준 순위입니다.
+    <hr>
+    <div id="row-view-my-rank" class="row">
+        <div class="col-md-12">
+            <a id="view-my-rank-a" role="button" class="btn btn-info">내 순위 보기</a>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <nav>
+                <ul class="pager">
+                    <li id="pager-prev" class="previous"><a id="pager-prev-a" href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    <li id="pager-next" class="next"><a id="pager-next-a" href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
+
+            <table id="rank-table" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>User</th>
+                        <th>Point</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <nav class="pull-right">
+                <ul class="pagination">
+                    <li id="pagination-prev-first">
+                        <a id="pagination-prev-first-a" href="#" aria-label="Previous">
+                            <span aria-hidden="true">1 &laquo;</span>
+                        </a>
+                    </li>
+                    <li id="pagination-prev-page">
+                        <a id="pagination-prev-page-a" href="#" aria-label="Previous">
+                            <span aria-hidden="true"><span id="pagination-prev-page-index"></span><span class="glyphicon glyphicon glyphicon-menu-left" aria-hidden="true"></span></span>
+                        </a>
+                    </li>
+                    <li id="pagination-next-page">
+                        <a id="pagination-next-page-a" href="#" aria-label="Next">
+                            <span aria-hidden="true"><span class="glyphicon glyphicon glyphicon-menu-right" aria-hidden="true"></span><span id="pagination-next-page-index"></span></span>
+                        </a>
+                    </li>
+                    <li id="pagination-next-last">
+                        <a id="pagination-next-last-a" href="#" aria-label="Last">
+                            <span aria-hidden="true">&raquo; <span id="pagination-next-last-index"></span></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
 
     <script>
     angular.module('ui.bootstrap.demo').controller('Pagination', function ($scope, $log) {
@@ -68,4 +78,8 @@
 	  $scope.maxSize = 10;
 	});
     </script>
+@EndSection
+
+@Section['PageScript']
+<script src="js/leaderboard.js"></script>
 @EndSection

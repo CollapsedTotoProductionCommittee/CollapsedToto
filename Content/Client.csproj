@@ -74,7 +74,9 @@
     <Content Include="word.html" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="js\leaderboard.js" />
+    <Content Include="js\leaderboard.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <TypeScriptCompile Include="js\test.ts" />
   </ItemGroup>
   <ItemGroup>
