@@ -14,6 +14,7 @@ namespace CollapsedToto
         [Key]
         public int RoundID { get; set; }
         public string Text { get; set; }
+        public string EmbedTweet { get; set; }
         virtual public List<KeyValuePair<string, int>> MatchedValues { get; set; }
         virtual public List<KeyValuePair<string, int>> UnmatchedValues { get; set; }
         public DateTime TweetTime { get; set; }

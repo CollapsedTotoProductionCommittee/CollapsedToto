@@ -77,7 +77,13 @@ namespace CollapsedToto
                     line = line.Trim();
                     if (line.Length > 0)
                     {
-                        ProcessNewTweet(line);
+                        try
+                        {
+                            ProcessNewTweet(line);
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
             }
@@ -87,16 +93,26 @@ namespace CollapsedToto
                 JObject tweet = JObject.Parse(line);
 
                 // 트윗 삭제는 무시
-                if (tweet["deleted"] == null)
+                if (tweet["delete"] != null)
                 {
                     return;
                 }
 
                 string text = tweet["text"].ToString();
-                DateTime now = DateTime.Parse(tweet["created_at"].ToString());
+                string timeString = tweet["timestamp_ms"].ToString();
+                DateTime now = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                now = now.AddSeconds(UInt64.Parse(timeString) / 1000);
                 using (var context = new DatabaseContext())
                 {
-                    RoundResult lastResult = context.RoundResults.LastOrDefault();
+                    RoundResult lastResult = null;
+                    try
+                    {
+                        lastResult = context.RoundResults.LastOrDefault();
+                    }
+                    catch
+                    {
+                        // Do nothing
+                    }
                     int newRoundID = 1;
                     if (lastResult != null)
                     {
@@ -107,9 +123,20 @@ namespace CollapsedToto
                         newRoundID = lastResult.RoundID + 1;
                     }
 
+                    MessageReceivingEndpoint endpoint = new MessageReceivingEndpoint(
+                        "https://api.twitter.com/1.1/statuses/oembed.json",
+                        HttpDeliveryMethods.GetRequest | HttpDeliveryMethods.AuthorizationHeaderRequest);
+
+                    var extraData = new Dictionary<string, string>
+                    {
+                        { "id", tweet["id_str"].ToString() }
+                    };
+                    var request = consumer.PrepareAuthorizedRequest(endpoint, Constants.TwitterAccessToken, extraData);
+
                     RoundResult newResult = new RoundResult();
                     newResult.RoundID = newRoundID;
                     newResult.Text = text;
+                    newResult.EmbedTweet = JObject.Parse(new StreamReader(request.GetResponse().GetResponseStream()).ReadToEnd())["html"].ToString();;
                     newResult.TweetTime = now;
 
                     var redis = RedisContext.Database;
