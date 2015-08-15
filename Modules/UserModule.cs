@@ -13,6 +13,7 @@ using DotNetOpenAuth.OAuth.ChannelElements;
 using DotNetOpenAuth.OAuth.Messages;
 using log4net;
 using Nancy;
+using Nancy.Responses;
 
 namespace CollapsedToto
 {
@@ -216,23 +217,43 @@ namespace CollapsedToto
         {
             logger.Debug("Try SignIn");
             var callbackUriString = Request.Url.SiteBase + "/user/callback";
-            if (param.redirect != null)
+            Dictionary<string, string> redirectParam = null;
+            if (Request.Query.redirect != null)
             {
-                callbackUriString += string.Format("?redirect={0}", param.redirect);
+                redirectParam = new Dictionary<string, string>
+                {
+                    { "redirect", Request.Query.redirect }
+                };
             }
             var callbackUri = new Uri(callbackUriString);
-            var request = TwitterSignIn.PrepareRequestUserAuthorization(callbackUri, null, null);
+            var request = TwitterSignIn.PrepareRequestUserAuthorization(callbackUri, null, redirectParam);
 
             return TwitterSignIn.Channel.PrepareResponse(request).AsNancyResponse();
         }
 
         [Get("/callback")]
-        public dynamic callback(dynamic param)
+        public async Task<dynamic> callback(dynamic param, CancellationToken ct)
         {
             logger.Debug("Callback ");
             var response = TwitterSignIn.ProcessUserAuthorization(Request);
+            string userID = response.ExtraData["user_id"];
+            Session["UserID"] = userID;
+            using (var context = new DatabaseContext())
+            {
+                if (!context.Users.Any(user => user.UserID == userID))
+                {
+                    context.Users.Add(new User(userID));
+                }
+                await context.SaveChangesAsync();
+            }
 
-            return TwitterSignIn.Channel.PrepareResponse(response).AsNancyResponse();
+            string redirect = "/";
+            if (Request.Query.redirect != null)
+            {
+                redirect = Request.Query.redirect;
+            }
+
+            return new RedirectResponse(redirect);
         }
     }
 }
