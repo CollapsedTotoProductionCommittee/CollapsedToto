@@ -94,6 +94,12 @@ namespace CollapsedToto
                         };
                     }
 
+                    long count = await RedisContext.Database.ListLeftPushAsync(RedisContext.TrendKeywordList, keyword);
+                    if (count > 5)
+                    {
+                        RedisContext.Database.ListRightPopAsync(RedisContext.TrendKeywordList);
+                    }
+
                     if (roundInfo.BettedWords.ContainsKey(keyword))
                     {
                         roundInfo.BettedWords[keyword] += point;

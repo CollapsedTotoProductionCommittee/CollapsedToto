@@ -10,6 +10,7 @@ namespace CollapsedToto
         public static string CurrentRoundPoint = "CurrentRountPoint";
         public static string CurrentRoundBettingCount = "CurrentRoundBettingCount";
         public static string UserPointRank = "UserPointRank";
+        public static string TrendKeywordList = "TrendKeywordList";
 
         private static ConnectionMultiplexer redis = null;
 
