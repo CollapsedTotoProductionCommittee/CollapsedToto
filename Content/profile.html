@@ -1,11 +1,129 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="shortcut icon" type="image/x-icon" href="image/favicon.png" />
+
+    <script src="js/angular.min.js"></script>
+
+    <title>디버거 @ 붕괴토토</title>
+
+    <!-- css -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <!-- Should be moved into including sshtml file -->
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapsing" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">@Collapsed_bot TOTO</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapsing">
+                <ul class="nav navbar-nav">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="history.html">History</a></li>
+                    <li><a href="leaderboard.html">Leaderboard</a></li>
+                </ul>
+
+                <!-- To Login -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><img src="image/twitter_logo_blue_16.png"> Login via Twitter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- Logged In -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">로그인 된 이름 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="mypage.html">My Page</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <h1>디버거</h1>
+            <a class="btn btn-default pull-right" href="https://twitter.com/intent/user?user_id=150511652" role="button"><img src="image/twitter_logo_blue_16.png"> 트위터 계정 보기</a>
+            <dl class="dl-horizontal">
+                <dt>
+                    보유 포인트
+                </dt>
+                <dd>
+                    <strong>1,123</strong> pt
+                </dd>
+                <dt>
+                    개인회생
+                </dt>
+                <dd>
+                    <strong>0</strong> 회
+                </dd>
+                <dt>
+                    최고 배당률 단어
+                </dt>
+                <dd>
+                    붕괴 (7.65)
+                </dd>
+            </dl>
+        </div>
+
+        <div class="row">
+            <hr>
+            <h2>참가 기록</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>회차</th>
+                        <th>트윗</th>
+                        <th>배팅 키워드</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row"><a href="oldround.html?round=2">2</a></th>
+                        <td>번식이라는 개념이 존재하지 않는 고결한 ...</td>
+                        <td><abbr title="배당률: 1.33"><span class="text-success">붕괴</span></abbr> <span class="text-danger">봇주</span>, ...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- js -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/test.js"></script>
 </body>
 </html>

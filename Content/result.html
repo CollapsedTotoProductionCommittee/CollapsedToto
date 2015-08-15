@@ -1,11 +1,164 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="shortcut icon" type="image/x-icon" href="image/favicon.png" />
+
+    <script src="js/angular.min.js"></script>
+
+    <title>붕괴토토 제 765회차 참가 결과</title>
+
+    <!-- css -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <!-- Should be moved into including sshtml file -->
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapsing" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">@Collapsed_bot TOTO</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapsing">
+                <ul class="nav navbar-nav">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="history.html">History</a></li>
+                    <li><a href="leaderboard.html">Leaderboard</a></li>
+                </ul>
+
+                <!-- To Login -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><img src="image/twitter_logo_blue_16.png"> Login via Twitter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- Logged In -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">로그인 된 이름 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="mypage.html">My Page</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>붕괴토토 제 765 라운드 결산</h1>
+        
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-xs-12 col-xs-offset-0">
+                <blockquote>
+                    <p>
+                        이곳에 한 글자씩 클래스 설정 가능하도록 분할한 붕괴봇의 원본 트윗이 들어갈 예정입니다. 140자 플레이스홀더 어디까지 되는거냐 모르겠다 으어어.
+                    </p>
+                    <footer>2015-08-15 22:30:02 (KST)</footer>
+                </blockquote>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-xs-12 col-xs-offset-0">
+                <p>
+                    제 765 라운드에서 총 <strong>24</strong> 개의 키워드가 적중하였습니다.
+                </p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p class="bg-info">
+                    12 개의 키워드에 배팅하여 <strong>2</strong> 개의 키워드가 적중하였습니다.
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>키워드</th>
+                            <th>배당률</th>
+                            <th>배팅 포인트</th>
+                            <th>배팅 시각</th>
+                            <th>적중 여부</th>
+                            <th>획득 포인트</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="success">
+                            <th scope="row" class="text-success">붕괴</th>
+                            <td>8.76</td>
+                            <td>2 pt</td>
+                            <td>2015-08-15 22:30:02 (KST)</td>
+                            <td>O</td>
+                            <td><abbr title="2pt + 15.52pt(7.76배 배당) x 1.0(단어길이 보너스) ÷ 24(전체 적중 키워드)">3 pt</abbr></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-danger">봇주</th>
+                            <td>8.76</td>
+                            <td>2 pt</td>
+                            <td>2015-08-15 22:30:02 (KST)</td>
+                            <td>X</td>
+                            <td>0 pt</td>
+                        </tr>
+                        <tr class="warning">
+                            <th scope="row">봇주</th>
+                            <td>8.76</td>
+                            <td>2 pt</td>
+                            <td class="text-danger">2015-08-15 22:30:02 (KST)</td>
+                            <td><abbr title="라운드 종료 후 배팅">N/A</abbr></td>
+                            <td><abbr title="배팅 포인트 전액 환불">2 pt</abbr></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>합계</td>
+                            <td></td>
+                            <td>6 pt</td>
+                            <td></td>
+                            <td></td>
+                            <td>5 pt</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <p>
+                    제 765 라운드에서 <strong>5</strong> pt를 획득하였습니다.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- js -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/test.js"></script>
 </body>
 </html>
