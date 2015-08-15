@@ -14,6 +14,10 @@ using DotNetOpenAuth.OAuth.Messages;
 using log4net;
 using Nancy;
 using Nancy.Responses;
+using System.Net;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CollapsedToto
 {
@@ -237,15 +241,26 @@ namespace CollapsedToto
             logger.Debug("Callback ");
             var response = TwitterSignIn.ProcessUserAuthorization(Request);
             string userID = response.ExtraData["user_id"];
+            string screenName = response.ExtraData["screen_name"];
             Session["UserID"] = userID;
-            using (var context = new DatabaseContext())
+
+            MessageReceivingEndpoint endpoint = new MessageReceivingEndpoint(
+                "https://api.twitter.com/1.1/users/show.json",
+                HttpDeliveryMethods.GetRequest | HttpDeliveryMethods.AuthorizationHeaderRequest);
+
+            var extraData = new Dictionary<string, string>
             {
-                if (!context.Users.Any(user => user.UserID == userID))
+                { "user_id", userID },
+                { "screen_name", screenName }
+            };
+            HttpWebRequest req = TwitterSignIn.PrepareAuthorizedRequest(endpoint, response.AccessToken, extraData);
+            req.BeginGetResponse(this.OnProfile, new Tuple<User, HttpWebRequest>(
+                new User(userID)
                 {
-                    context.Users.Add(new User(userID));
-                }
-                await context.SaveChangesAsync();
-            }
+                    ScreenName = screenName
+                },
+                req
+            ));
 
             string redirect = "/";
             if (Request.Query.redirect != null)
@@ -254,6 +269,38 @@ namespace CollapsedToto
             }
 
             return new RedirectResponse(redirect);
+        }
+
+        [Get("/info/{id}")]
+        public dynamic UserInfo(dynamic param)
+        {
+            using (var context = new DatabaseContext())
+            {
+                string userID = param.id.ToString();
+                return JsonConvert.SerializeObject(context.Users.Where(u => u.UserID.Equals(userID)).FirstOrDefault());
+            }
+        }
+
+        public void OnProfile(IAsyncResult ar)
+        {
+            Tuple<User, HttpWebRequest> state = ar.AsyncState as Tuple<User, HttpWebRequest>;
+            User user = state.Item1 as User;
+            HttpWebRequest req = state.Item2 as HttpWebRequest;
+            JObject res = JObject.Parse(new StreamReader(req.EndGetResponse(ar).GetResponseStream()).ReadToEnd());
+            user.UserFullName = res["name"].ToString();
+            user.ProfileIconURL = res["profile_image_url"].ToString();
+            using (var context = new DatabaseContext())
+            {
+                if (!context.Users.Any(u => u.UserID == user.UserID))
+                {
+                    context.Users.Add(user);
+                }
+                else
+                {
+                    context.Users.Attach(user);
+                }
+                context.SaveChangesAsync();
+            }
         }
     }
 }

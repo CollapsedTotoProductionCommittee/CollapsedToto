@@ -27,6 +27,12 @@ namespace CollapsedToto
         public long Point { get; set; }
         // 개인회생시에 요구되는 시간의 레벨
         public int PaneltyLevel { get; set; }
+        [StringLength(64)]
+        public string UserFullName { get; set; }
+        [StringLength(32)]
+        public string ScreenName { get; set; }
+        [StringLength(128)]
+        public string ProfileIconURL { get; set; }
     }
 }
 
