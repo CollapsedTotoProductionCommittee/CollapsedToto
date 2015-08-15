@@ -8,6 +8,7 @@ namespace CollapsedToto
     {
         static public string TwitterConsumerSecret = "";
         static public TimeSpan MinimumDelay = new TimeSpan(0, 30, 0);
+        static public int MinimumPoint = 100;
 
         static public string TwitterConsumerKey = "0MoZc9Bu0KcFeWYMV90ckIQoX";
         static public string TwitterAccessToken = "";
