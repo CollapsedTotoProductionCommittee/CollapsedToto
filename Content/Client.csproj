@@ -57,6 +57,7 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\common.css" />
+    <Content Include="css\index.css" />
     <Content Include="curround.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="history.html" />
@@ -73,6 +74,7 @@
     <Content Include="word.html" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="js\leaderboard.js" />
     <TypeScriptCompile Include="js\test.ts" />
   </ItemGroup>
   <ItemGroup>

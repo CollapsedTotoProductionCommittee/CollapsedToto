@@ -75,21 +75,21 @@
         <h1>붕괴토토 포인트 랭킹</h1>
         (서버시각 랜더링) 현재, 포인트 기준 순위입니다.
         <hr>
-        <div class="row">
+        <div id="row-view-my-rank" class="row">
             <div class="col-md-12">
-                <button type="button" class="btn btn-info">내 순위 보기</button>
+                <a id="view-my-rank-a" role="button" class="btn btn-info">내 순위 보기</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <nav>
                     <ul class="pager">
-                        <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
-                        <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                        <li id="pager-prev" class="previous"><a id="pager-prev-a" href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                        <li id="pager-next" class="next"><a id="pager-next-a" href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
                     </ul>
                 </nav>
                 
-                <table class="table table-hover">
+                <table id="rank-table" class="table table-hover">
                     <thead>
                         <tr>
                             <th>Rank</th>
@@ -98,49 +98,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td><a href="profile.html?id=150511652">디버거</a></td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td><a href="profile.html?id=77647198">Perlmint</a></td>
-                            <td>111</td>
-                        </tr>
                     </tbody>
                 </table>
                 
                 <nav class="pull-right">
                     <ul class="pagination">
-                        <li class="disabled">
-                            <a href="#" aria-label="Previous">
+                        <li id="pagination-prev-first">
+                            <a id="pagination-prev-first-a" href="#" aria-label="Previous">
                                 <span aria-hidden="true">1 &laquo;</span>
                             </a>
                         </li>
-                        <li class="disabled">
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">-2 <span class="glyphicon glyphicon glyphicon-menu-left" aria-hidden="true"></span></span>
+                        <li id="pagination-prev-page">
+                            <a id="pagination-prev-page-a" href="#" aria-label="Previous">
+                                <span aria-hidden="true"><span id="pagination-prev-page-index"></span><span class="glyphicon glyphicon glyphicon-menu-left" aria-hidden="true"></span></span>
                             </a>
                         </li>
-                        <li><a href="#">1</a></li>
-                        <li class="active"><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">7</a></li>
-                        <li><a href="#">8</a></li>
-                        <li><a href="#">9</a></li>
-                        <li><a href="#">10</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true"><span class="glyphicon glyphicon glyphicon-menu-right" aria-hidden="true"></span> 12</span>
+                        <li id="pagination-next-page">
+                            <a id="pagination-next-page-a" href="#" aria-label="Next">
+                                <span aria-hidden="true"><span class="glyphicon glyphicon glyphicon-menu-right" aria-hidden="true"></span><span id="pagination-next-page-index"></span></span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#" aria-label="Last">
-                                <span aria-hidden="true">&raquo; 101</span>
+                        <li id="pagination-next-last">
+                            <a id="pagination-next-last-a" href="#" aria-label="Last">
+                                <span aria-hidden="true">&raquo; <span id="pagination-next-last-index"></span></span>
                             </a>
                         </li>
                     </ul>
@@ -149,10 +129,25 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        var loggedInUserId = 1234;
+
+        var currentPage = 12;
+        var maxPage = 24;
+
+        var pageData = [
+            { "rank": 1, "userId": 1111, "userName": "디버거", "point": 123 },
+            { "rank": 2, "userId": 2222, "userName": "Perlmint", "point": 111 },
+        ];
+
+        var userProfilePathPrefix = "http://127.0.0.1:8001/user/";
+        var leaderboardPathPrefix = "http://127.0.0.1:8001/rank/point/";
+    </script>
+
     <!-- js -->
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
-    <script src="js/test.js"></script>
+    <script src="js/leaderboard.js"></script>
 </body>
 </html>
