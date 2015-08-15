@@ -159,6 +159,8 @@
     <Compile Include="Models\DatabaseContext.cs" />
     <Compile Include="Modules\RankModule.cs" />
     <Compile Include="InvestigationModule.cs" />
+    <Compile Include="Models\Redis.cs" />
+    <Compile Include="ServerInit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

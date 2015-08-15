@@ -11,24 +11,6 @@ namespace CollapsedToto
     [Prefix("/round")]
     public class RoundModule : BaseModule
     {
-        private static ConnectionMultiplexer redis = null;
-        private static IDatabase Database
-        {
-            get
-            {
-                if (redis == null)
-                {
-                    redis = ConnectionMultiplexer.Connect("127.0.0.1:6379,resolveDns=True");
-                }
-
-                return redis.GetDatabase();
-            }
-        }
-        private string CurrentRoundID = "CurrentRoundID";
-        private string CurrentRoundKey = "CurrentRound";
-        private string CurrentRoundPoint = "CurrentRountPoint";
-        private string CurrentRoundBettingCount = "CurrentRoundBettingCount";
-
         public RoundModule()
         {
         }
@@ -36,7 +18,7 @@ namespace CollapsedToto
         [Get("/popular")]
         public async Task<dynamic> PopularKeyword(dynamic param, CancellationToken ct)
         {
-            SortedSetEntry[] values = await Database.SortedSetRangeByRankWithScoresAsync(CurrentRoundKey, 0, 30);
+            SortedSetEntry[] values = await RedisContext.Database.SortedSetRangeByRankWithScoresAsync(RedisContext.CurrentRoundKey, 0, 30);
 
             return JsonConvert.SerializeObject(values);
         }
@@ -46,13 +28,13 @@ namespace CollapsedToto
         {
             Dictionary<string, object> ret = new Dictionary<string, object>();
 
-            ret.Add("totalPoint", await Database.StringGetAsync(CurrentRoundPoint));
-            ret.Add("totalCount", await Database.StringGetAsync(CurrentRoundBettingCount));
+            ret.Add("totalPoint", await RedisContext.Database.StringGetAsync(RedisContext.CurrentRoundPoint));
+            ret.Add("totalCount", await RedisContext.Database.StringGetAsync(RedisContext.CurrentRoundBettingCount));
 
             return JsonConvert.SerializeObject(ret);
         }
 
-        [Post("/bet")]
+        [Get("/bet")]
         public async Task<dynamic> BettingKeyword(dynamic param, CancellationToken ct)
         {
             bool result = false;
@@ -88,12 +70,12 @@ namespace CollapsedToto
                     }
                 }
 
-                int roundID = int.Parse(Database.StringGet(CurrentRoundID));
+                int roundID = int.Parse(RedisContext.Database.StringGet(RedisContext.CurrentRoundID));
 
                 using (var context = new DatabaseContext())
                 {
-                    await Database.SortedSetIncrementAsync(CurrentRoundKey, keyword, 1.0);
-                    await Database.StringIncrementAsync(CurrentRoundPoint, point);
+                    await RedisContext.Database.SortedSetIncrementAsync(RedisContext.CurrentRoundKey, keyword, 1.0);
+                    await RedisContext.Database.StringIncrementAsync(RedisContext.CurrentRoundPoint, point);
 
                     var userInfo = (from user in context.Users
                                                   where user.UserID.Equals(userID)
@@ -119,7 +101,7 @@ namespace CollapsedToto
                     else
                     {
                         roundInfo.BettedWords.Add(keyword, point);
-                        await Database.StringIncrementAsync(CurrentRoundBettingCount);
+                        await RedisContext.Database.StringIncrementAsync(RedisContext.CurrentRoundBettingCount);
                     }
 
                     await context.SaveChangesAsync();

@@ -10,11 +10,13 @@ namespace CollapsedToto
         public RoundResult()
         {
         }
+
         [Key]
         public int RoundID { get; set; }
         public string Text { get; set; }
         virtual public List<KeyValuePair<string, int>> MatchedValues { get; set; }
         virtual public List<KeyValuePair<string, int>> UnmatchedValues { get; set; }
+        public DateTime TweetTime { get; set; }
     }
 }
 

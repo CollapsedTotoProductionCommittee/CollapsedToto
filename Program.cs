@@ -38,6 +38,8 @@ namespace CollapsedToto
 
             Database.SetInitializer(new DbInitializer<DatabaseContext>());
             new DatabaseContext().Database.Initialize(true);
+
+            ServerInit.Init();
         }
 
         public void Start()

@@ -33,6 +33,7 @@ namespace CollapsedToto
         public string ScreenName { get; set; }
         [StringLength(128)]
         public string ProfileIconURL { get; set; }
+        public DateTime ReviveRequestedTime { get; set; }
     }
 }
 
